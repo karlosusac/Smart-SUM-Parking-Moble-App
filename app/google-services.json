@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "426114029372",
+    "firebase_url": "https://smartsumparking.firebaseio.com",
+    "project_id": "smartsumparking",
+    "storage_bucket": "smartsumparking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426114029372:android:9d5f4150395bb99f7df039",
+        "android_client_info": {
+          "package_name": "com.smartsum.smartsumparking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426114029372-o95tgnd0ige2cfqgrn2p5a3e6cmsj6u2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartsum.smartsumparking",
+            "certificate_hash": "8a3fe8b8afc4081f3b2a98c1c72aa9c3407c55ff"
+          }
+        },
+        {
+          "client_id": "426114029372-pfip37tgm9ch5gae4mcig6b6ul6k9nev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOgSc0z9qzJkNfqFLt59xoHCYfq1ky0Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426114029372-pfip37tgm9ch5gae4mcig6b6ul6k9nev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
