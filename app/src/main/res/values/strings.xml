@@ -1,4 +1,28 @@
 <resources>
-    <string name="app_name">smartsumparking</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">SUM Parking</string>
+    <string name="title_activity_maps">Smart Sum Parking</string>
+
+    //Navigation drawer
+    <string name="navDrawOpen">Otvorite navigacisku ploču</string>
+    <string name="navDrawClose">Zatvorite navigacisku ploču</string>
+    //-----------------
+
+    //Drawer menu
+    <string name="drawMenuMap">Mapa</string>
+    <string name="drawMenuLegend">Legenda</string>
+    <string name="drawMenuLogin">Prijava</string>
+    <string name="drawMenuSettings">Postavke</string>
+    <string name="drawMenuLogout">Odjava</string>
+    <string name="drawMenuUserMiniTitle">Korisnik</string>
+    //-----------------
+
+    //LoginDialogFragment
+    <string name="logTitle">Prijavite se</string>
+    <string name="logInputHintEmail">Unesite email adresu</string>
+    <string name="logInputHintPass">Unesite lozinku</string>
+    <string name="logBtnConfirm">Prijava</string>
+    <string name="logBtnCancel">Odustani</string>
+    <string name="logIncorrectCredentials">Neispravna e-mail adresa i/ili lozinka</string>
+    <string name="logEmptyCredientials">Unesite e-mail adresu i lozinku</string>
+    //----------------------
 </resources>

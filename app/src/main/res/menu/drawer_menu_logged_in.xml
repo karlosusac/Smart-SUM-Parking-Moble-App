@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navMap"
+            android:icon="@drawable/ic_map_24dp"
+            android:title="@string/drawMenuMap"/>
+    </group>
+
+    <item
+        android:id="@+id/navLegend"
+        android:icon="@drawable/ic_legend_24dp"
+        android:title="@string/drawMenuLegend" />
+
+
+    <item android:title="@string/drawMenuUserMiniTitle">
+        <menu>
+            <item
+                android:id="@+id/navSettings"
+                android:icon="@drawable/ic_settings_24dp"
+                android:title="@string/drawMenuSettings" />
+
+            <item
+                android:id="@+id/navLogout"
+                android:icon="@drawable/ic_logout_24dp"
+                android:title="@string/drawMenuLogout" />
+        </menu>
+    </item>
+
+</menu>

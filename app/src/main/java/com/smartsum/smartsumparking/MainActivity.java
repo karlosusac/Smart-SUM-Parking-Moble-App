@@ -1,23 +1,38 @@
 package com.smartsum.smartsumparking;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.smartsum.smartsumparking.databinding.ActivityMainBinding;
+import android.app.Fragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoginDialogFragment.logDialogFragmentSignInUser {
+
+    //drawer layout
+    private DrawerLayout drawer;
+
+    //Navigation View
+    NavigationView navView;
 
     //viewBinding
     private ActivityMainBinding binding;
@@ -25,19 +40,13 @@ public class MainActivity extends AppCompatActivity {
     //Firebase
         //Firebase auth
         private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        private FirebaseUser currentUser;
+
         //Firebase database
         private FirebaseDatabase db = FirebaseDatabase.getInstance();
+
         //Firebase Reference
         private DatabaseReference parking1 = db.getReference("0");
-
-
-    //Parking variables
-    private String parkingLat;
-    private String parkingLng;
-
-    //Buttons
-    private Button openMaps;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +55,98 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        openMaps = binding.button;
+        //Toolbar
+        Toolbar toolbar = binding.toolbar;
+        setSupportActionBar(toolbar);
 
-        openMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        //Nav drawer
+        drawer = binding.drawerLayout;
+        navView = binding.navView;
+        navView.setNavigationItemSelectedListener(this);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new MapsFragment()).commit();
 
-
-        getParkingLatLng();
+        //Tieing nav drawer open icon to the action bar
+        ActionBarDrawerToggle navBarToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navDrawOpen, R.string.navDrawClose);
+        drawer.addDrawerListener(navBarToggle);
+        navBarToggle.syncState();
     }
 
-    private void getParkingLatLng(){
-        parking1.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                parkingLat = dataSnapshot.child("lat").getValue().toString();
-                parkingLng = dataSnapshot.child("lng").getValue().toString();
-            }
+    @Override
+    public void onBackPressed() {
+        //If nav drawer is open, if you press back button do not close the app but close the nav drawer
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+    //Method that handles clicks on the nav drawer items
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.navMap:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new MapsFragment()).commit();
+                break;
 
-            }
-        });
+            case R.id.navLogin:
+                LoginDialogFragment logDiagFrag = new LoginDialogFragment();
+                logDiagFrag.show(getSupportFragmentManager(), "login_dialog_fragment");
+                break;
+
+            case R.id.navLogout:
+                mAuth.getInstance().signOut();
+
+                finishAffinity();
+                restartActivity();
+
+                break;
+        }
+
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Check if user is signed in (non-null) and restart an activity accordingly.
+        if(checkLogin() == true){
+            currentUser = mAuth.getCurrentUser();
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.drawer_menu_logged_in);
+
+            navView.setCheckedItem(R.id.navMap);
+
+        } else {
+            currentUser = null;
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.drawer_menu_logged_out);
+
+            navView.setCheckedItem(R.id.navMap);
+        }
+    }
+
+    private boolean checkLogin(){
+        if(mAuth.getCurrentUser() != null){
+            return true;
+        }
+
+        return false;
+    }
+
+    public void restartActivity(){
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
+    public void signInUser(FirebaseUser user) {
+        currentUser = mAuth.getCurrentUser();
+        restartActivity();
+        Log.d("TAG", "triggered");
     }
 }
