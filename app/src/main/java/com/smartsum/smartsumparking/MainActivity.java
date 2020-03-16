@@ -108,6 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 restartActivity();
 
                 break;
+
+            case R.id.navLegend:
+                LegendDialog legDialog = new LegendDialog();
+                legDialog.show(getSupportFragmentManager(), "legend_dialog");
         }
 
 
