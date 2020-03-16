@@ -24,6 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.smartsum.smartsumparking.databinding.ActivityMainBinding;
+import com.smartsum.smartsumparking.databinding.ActivityMapsBinding;
+import com.smartsum.smartsumparking.pojo.Parking;
+import com.smartsum.smartsumparking.pojo.ParkingSpace;
+
 import android.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoginDialogFragment.logDialogFragmentSignInUser {
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
 
     //Navigation View
-    NavigationView navView;
+    private NavigationView navView;
 
     //viewBinding
     private ActivityMainBinding binding;
@@ -46,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         private FirebaseDatabase db = FirebaseDatabase.getInstance();
 
         //Firebase Reference
-        private DatabaseReference parking1 = db.getReference("0");
+        private DatabaseReference parking1Ref = db.getReference("0");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new MapsFragment()).commit();
 
-        //Tieing nav drawer open icon to the action bar
+        //Tying nav drawer open icon to the action bar
         ActionBarDrawerToggle navBarToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navDrawOpen, R.string.navDrawClose);
         drawer.addDrawerListener(navBarToggle);
         navBarToggle.syncState();
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //TODO Still need to add the Legend Dialog
     //Method that handles clicks on the nav drawer items
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -147,6 +153,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void signInUser(FirebaseUser user) {
         currentUser = mAuth.getCurrentUser();
         restartActivity();
-        Log.d("TAG", "triggered");
     }
 }
