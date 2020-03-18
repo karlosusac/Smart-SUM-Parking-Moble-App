@@ -25,4 +25,9 @@
     <string name="logIncorrectCredentials">Neispravna e-mail adresa i/ili lozinka</string>
     <string name="logEmptyCredientials">Unesite e-mail adresu i lozinku</string>
     //----------------------
+
+    //LegendDialog
+    <string name="legTitle">Legenda</string>
+    <string name="legDiagCancel">Izlaz</string>
+    //-------------------------------
 </resources>

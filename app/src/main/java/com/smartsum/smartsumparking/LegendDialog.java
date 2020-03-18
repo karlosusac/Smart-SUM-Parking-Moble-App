@@ -27,8 +27,8 @@ public class LegendDialog extends DialogFragment {
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_legend, null, false);
         builder.setView(binding.getRoot());
 
-        builder.setTitle("Legenda")
-                .setNegativeButton("Izlaz", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.legTitle))
+                .setNegativeButton(getString(R.string.legDiagCancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Leave

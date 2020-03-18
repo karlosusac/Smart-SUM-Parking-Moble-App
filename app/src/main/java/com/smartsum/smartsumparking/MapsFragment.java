@@ -82,13 +82,11 @@ public class MapsFragment extends Fragment {
     private BitmapDrawable disabledParkingSpaceBmp;
     private BitmapDrawable availableParkingSpaceHandicapBmp;
     private BitmapDrawable occupiedParkingSpaceHandicapBmp;
+    private BitmapDrawable sumParkingBmp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. activity_maps, null, false);
-
-        //TODO pobrisati ovo ispod i treba biti negdje ovdije dio za inicijaliziranje slika jer inače jede govna
-        //TODO sinoć sam prilikom testiranja umalo dobrio srčani kada je aplikacije crash-ala, ali u bazi se samo dodalo parking mjesto 62 koje izaziva error
 
         mMapView = (MapView) binding.mapView;
         mMapView.onCreate(savedInstanceState);
@@ -104,6 +102,9 @@ public class MapsFragment extends Fragment {
         disabledParkingSpaceBmp = (BitmapDrawable)getResources().getDrawable(R.drawable.circle_gray);
         availableParkingSpaceHandicapBmp = (BitmapDrawable)getResources().getDrawable(R.drawable.circle_green_handicap);
         occupiedParkingSpaceHandicapBmp = (BitmapDrawable)getResources().getDrawable(R.drawable.circle_red_handicap);
+        sumParkingBmp = (BitmapDrawable)getResources().getDrawable(R.drawable.sum_marker);
+
+
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -227,7 +228,6 @@ public class MapsFragment extends Fragment {
 
                     Parking.parkingSpaces.set(index ,parkingSpace);
                     index += 1;
-                    Log.d("index", String.valueOf(index));
 
                     //Make the new LatLng position for the marker
                     LatLng parkingPosition = new LatLng(Double.valueOf(parkingSpace.getLatitude()), Double.valueOf(parkingSpace.getLongitude()));
@@ -319,7 +319,6 @@ public class MapsFragment extends Fragment {
                 }
 
                 freeSpacesShow.setText(String.valueOf(Parking.availableSpaces));
-                Log.d("p", String.valueOf(Parking.availableSpaces));
             }
 
             @Override
@@ -351,7 +350,10 @@ public class MapsFragment extends Fragment {
 
     //Marker maker for the whole Parking
     private void setUpParkingMarker(){
-        Marker marker = mMap.addMarker((new MarkerOptions().position(new LatLng(Parking.latitude, Parking.longitude)).title(Parking.name)));
+
+        b = sumParkingBmp.getBitmap();
+        smallMarker = Bitmap.createScaledBitmap(b, 70, 102, false);
+        Marker marker = mMap.addMarker((new MarkerOptions().position(new LatLng(Parking.latitude, Parking.longitude)).title(Parking.name)).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
         marker.setTag(Parking.id);
         Parking.parkingMarkers.add(marker);
     }

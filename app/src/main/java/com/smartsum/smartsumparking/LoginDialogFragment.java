@@ -135,6 +135,7 @@ public class LoginDialogFragment extends DialogFragment {
         }
     }
 
+
     public interface logDialogFragmentSignInUser{
         void signInUser(FirebaseUser user);
     }

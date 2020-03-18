@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //TODO Still need to add the Legend Dialog
     //Method that handles clicks on the nav drawer items
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -140,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //return true if user exists
     private boolean checkLogin(){
         if(mAuth.getCurrentUser() != null){
             return true;
